@@ -1,0 +1,116 @@
+basePath: /
+definitions:
+  resp.R:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/resp.resp'
+      msg:
+        type: string
+    type: object
+  resp.resp:
+    type: object
+  service.PolyEnumElem:
+    properties:
+      name:
+        type: string
+      sample:
+        type: object
+      view:
+        type: string
+    type: object
+  service.PolyEnumReq:
+    properties:
+      sample:
+        type: boolean
+      type:
+        type: string
+    required:
+    - type
+    type: object
+  service.PolyEnumResp:
+    properties:
+      enumType:
+        type: string
+      list:
+        items:
+          $ref: '#/definitions/service.PolyEnumElem'
+        type: array
+    type: object
+host: polyapi
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /api/v1/polyapi/poly/enums:
+    post:
+      description: list enums
+      parameters:
+      - description: body parameters
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.PolyEnumReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: return list of specify enum
+          schema:
+            allOf:
+            - $ref: '#/definitions/resp.R'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.PolyEnumResp'
+              type: object
+      summary: list enums
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+  OAuth2AccessCode:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: accessCode
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Application:
+    flow: application
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Implicit:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: implicit
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    type: oauth2
+  OAuth2Password:
+    flow: password
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      read: ' Grants read access'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+swagger: "2.0"
+x-extension-openapi:
+  example: value on a json format
