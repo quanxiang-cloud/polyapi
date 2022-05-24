@@ -119,6 +119,7 @@ type PolyAPIFull struct {
 	Name      string `json:"name"` // name
 	Title     string `json:"title"`
 	Desc      string `json:"desc"`
+	Access    uint   `json:"access"`
 	Active    uint   `json:"active"`
 	Method    string `json:"method"`
 	Arrange   string `json:"arrange"` // arrange info
