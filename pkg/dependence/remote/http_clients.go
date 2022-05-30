@@ -1,6 +1,5 @@
 package apisecret
 
-/*
 import (
 	"bytes"
 	"context"
@@ -9,13 +8,11 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/quanxiang-cloud/cabin/logger"
 	ginLogger "github.com/quanxiang-cloud/cabin/tailormade/gin"
-	header2 "github.com/quanxiang-cloud/cabin/tailormade/header"
 	"github.com/quanxiang-cloud/polyapi/pkg/basic/adaptor"
 	"github.com/quanxiang-cloud/polyapi/pkg/basic/defines/consts"
 	"github.com/quanxiang-cloud/polyapi/pkg/basic/defines/errcode"
@@ -232,76 +229,8 @@ func (r *goalieResolver) request(c *gin.Context, arg *requestArg) error {
 		return errcode.ErrInternal.FmtError(resp.Status)
 	}
 
-	roleStr := resp.Header.Get(consts.HeaderRole)
-	roles := strings.Split(roleStr, ",")
-	header2.SetRole(c, roles...)
 	return nil
 }
-
-//------------------------------------------------------------------------------
-
-// type fileUploadResolver oauthClient
-
-// func (r *fileUploadResolver) request(c *gin.Context, arg *requestArg) error {
-// 	return errors.New("unsupported request")
-// }
-
-// type uploadResp struct {
-// 	Data uploadData `json:"data"`
-// }
-
-// type uploadData struct {
-// 	URL string `json:"url"`
-// }
-
-// func (r *fileUploadResolver) UploadFile(c context.Context, fileName string, content []byte) (string, error) {
-// 	bodyBuf := &bytes.Buffer{}
-// 	bodyWriter := multipart.NewWriter(bodyBuf)
-// 	w, err := bodyWriter.CreateFormFile("file", fileName)
-// 	io.Copy(w, bytes.NewReader(content))
-// 	bodyWriter.Close()
-//
-// 		--e85ee706b84f41e99b427165fb685ada736f3ee04da865ee4990fe446228
-// 		Content-Disposition: form-data; name="file"; filename="file name"
-// 		Content-Type: application/octet-stream
-
-// 		file-content
-// 		--e85ee706b84f41e99b427165fb685ada736f3ee04da865ee4990fe446228--  //random boundary
-//
-
-// 	req := &http.Request{
-// 		URL:    r.url,
-// 		Header: http.Header{},
-// 		Body:   io.NopCloser(bodyBuf),
-// 		Method: http.MethodPost,
-// 	}
-
-// 	req.ContentLength = int64(bodyBuf.Len())
-// 	// Content-Type: multipart/form-data; boundary=937294749910cb689a00bc5ce9359a945c2f27c56b37e692bdc55817915a
-// 	req.Header.Set(consts.HeaderContentType, bodyWriter.FormDataContentType())
-// 	req.Header.Set(consts.HeaderRequestID, hash.GenID("req"))
-
-// 	resp, err := r.client.Do(req)
-// 	if err != nil {
-// 		logger.Logger.Errorw("[fileserver]", string(content), err)
-// 		return "", err
-// 	}
-// 	if resp.StatusCode != http.StatusOK {
-// 		logger.Logger.Errorw("[fileserver]", string(content), resp.Status)
-// 		return "", errcode.ErrInternal.FmtError(resp.Status)
-// 	}
-
-// 	b, err := io.ReadAll(resp.Body)
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	var rb uploadResp
-// 	if err := json.Unmarshal(b, &rb); err != nil {
-// 		return "", err
-// 	}
-
-// 	return rb.Data.URL, nil
-// }
 
 //------------------------------------------------------------------------------
 
@@ -431,4 +360,3 @@ func newOathClient(cfg *config.OauthConfig) *oauthClient {
 	initFileServer()
 	return c
 }
-*/
