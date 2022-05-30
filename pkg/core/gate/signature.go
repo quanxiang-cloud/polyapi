@@ -3,13 +3,20 @@ package gate
 import (
 	"github.com/quanxiang-cloud/polyapi/pkg/basic/defines/errcode"
 	"github.com/quanxiang-cloud/polyapi/pkg/config"
+	apisecret "github.com/quanxiang-cloud/polyapi/pkg/dependence/remote"
 
 	"github.com/gin-gonic/gin"
 )
 
 func createAPISignature(conf *config.Config) (*apiSignature, error) {
+	authClient, err := apisecret.NewAuthorizeClient(&conf.Authorize)
+	if err != nil {
+		return nil, err
+	}
 
 	obj := &apiSignature{
+		authClient: authClient,
+
 		enableSignature: true, //NOTE: always enable signature check
 		openRegister:    true, //NOTE: always enable register
 	}
@@ -19,6 +26,7 @@ func createAPISignature(conf *config.Config) (*apiSignature, error) {
 
 // APISignature is the object for judge signature
 type apiSignature struct {
+	authClient      *apisecret.APIAuthVerifier
 	enableSignature bool
 	openRegister    bool
 }
